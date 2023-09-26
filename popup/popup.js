@@ -1,5 +1,3 @@
-// let authTabId = null;
-
 function authenticate(event) {
 	// Redirect the user to the GitHub OAuth page.
 	const AUTH_URL = "https://github.com/login/oauth/authorize";
