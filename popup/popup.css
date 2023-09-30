@@ -1,24 +1,26 @@
 body {
 	font-family: Arial, sans-serif;
-	background-color: #f0f0f0;
+	background-color: #1d1d1d;
 	width: 350px;
 	text-align: center;
 }
 
-div {
-	/* padding-top: 10px; */
-	/* padding-bottom: 20px; */
+header {
+	padding-top: 10;
+}
+
+.container {
 	margin: 20px 10px;
 }
 
 h1 {
 	font-size: 36px;
-	color: #333;
+	color: #ffffff;
 }
 
 p {
 	font-size: 16px;
-	color: #3a3a3a;
+	color: #ffffff;
 }
 
 hr {
@@ -26,8 +28,8 @@ hr {
 }
 
 button {
-	background-color: #333;
-	color: #fff;
+	background-color: #bb86fc;
+	color: #1d1d1d;
 	border: none;
 	padding: 10px 20px;
 	font-size: 16px;
@@ -44,5 +46,21 @@ button:hover {
 }
 
 a {
-	margin: 0px 4px; /* Adjust the margin to control spacing */
+	margin: 0px 4px;
+}
+
+#iconsContainer {
+	padding: 10px;
+}
+
+#bottomContainer {
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
+.caption {
+	text-align: center;
+	font-size: 12;
+	padding: 0;
+	margin: 0;
 }

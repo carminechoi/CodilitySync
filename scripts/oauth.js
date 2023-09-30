@@ -68,26 +68,6 @@ export class OAuth {
 			.then((data) => {
 				const accessToken = data.access_token;
 				chrome.storage.sync.set({ accessToken: accessToken });
-
-				// Get username
-				// fetch(this.username_url, {
-				// 	method: "GET",
-				// 	headers: {
-				// 		Authorization: `token ${accessToken}`,
-				// 	},
-				// })
-				// 	.then((response) => response.json())
-				// 	.then((data) => {
-				// 		console.log(data);
-				// 		const username = data.login;
-				// 		chrome.storage.sync.set({ username: username });
-				// 	})
-				// 	.catch((error) => {
-				// 		console.error(
-				// 			"Error exchanging authorization code for username:",
-				// 			error
-				// 		);
-				// 	});
 			})
 			.catch((error) => {
 				console.error(

@@ -1,23 +1,16 @@
-function handleRepository(event) {
-	event.preventDefault();
-	const repositoryType = document.querySelector(
-		'input[name="repositoryType"]:checked'
-	).value;
-	const repositoryName = document.getElementById("repositoryName").value;
+import Github from "../scripts/github.js";
 
-	if (repositoryType === "existing") {
-		alert(
-			`You selected to link an existing repository with the name: ${repositoryName}`
-		);
-		// Add your code to handle linking an existing repository here
-	} else if (repositoryType === "new") {
-		alert(
-			`You selected to create a new private repository with the name: ${repositoryName}`
-		);
-		// Add your code to handle creating a new private repository here
-	}
-}
-
-document
-	.getElementById("welcomeForm")
-	.addEventListener("submit", handleRepository);
+// Load the users repositories into the options
+document.addEventListener("DOMContentLoaded", function () {
+	const repositorySelect = document.getElementById("repositorySelect");
+	Github.fetchUserRepositories().then((repositories) => {
+		if (Array.isArray(repositories)) {
+			repositories.forEach((repo) => {
+				const option = document.createElement("option");
+				option.value = repo.name;
+				option.textContent = repo.name;
+				repositorySelect.appendChild(option);
+			});
+		}
+	});
+});

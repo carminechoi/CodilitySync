@@ -1,61 +1,34 @@
-/* Reset some default styles and apply a simple background color */
-body,
-h1,
-p {
-	margin: 0;
-	padding: 0;
-}
-
 body {
 	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
-}
-
-/* Style the header section */
-header {
-	background-color: #3498db;
-	color: #fff;
-	text-align: center;
-	padding: 20px 0;
-}
-
-.header-content {
-	max-width: 600px;
-	margin: 0 auto;
-}
-
-h1 {
-	font-size: 36px;
-}
-
-p {
-	font-size: 18px;
-}
-
-/* Style the main content */
-main {
-	padding: 20px;
+	background-color: #121212;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
 }
 
 .container {
-	background-color: #fff;
+	background-color: #1d1d1d;
+	color: #ffffff;
 	border-radius: 5px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	padding: 20px;
+	padding: 50px;
+	max-width: 400px;
 }
 
-h2 {
-	font-size: 24px;
+h1 {
+	text-align: center;
+	font-size: 32;
+	padding-bottom: 30px;
+}
+
+p {
+	font-size: 16px;
 	margin-bottom: 20px;
 }
 
-form label {
-	display: block;
-	margin-bottom: 10px;
-	font-weight: bold;
-}
-
-input[type="text"] {
+select {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
@@ -63,17 +36,29 @@ input[type="text"] {
 	border-radius: 5px;
 }
 
-button[type="submit"] {
-	background-color: #3498db;
-	color: #fff;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+option {
+	padding: 30px 0;
+	height: 50px;
 }
 
-/* Style radio buttons */
-input[type="radio"] {
-	margin-right: 5px;
-	vertical-align: middle;
+button {
+	background-color: #bb86fc;
+	color: #1d1d1d;
+	width: 100%;
+	border: none;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+#captionContainer {
+	padding-top: 30px;
+}
+
+.caption {
+	text-align: center;
+	font-size: 12;
+	padding: 0;
+	margin: 0;
 }

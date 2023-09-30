@@ -2,21 +2,29 @@ export class Github {
 	constructor() {}
 
 	async fetchUserRepositories() {
-		const accessTokenStorage = await chrome.storage.sync.get(["accessToken"]);
-		const accessToken = accessTokenStorage.accessToken;
+		try {
+			const result = await chrome.storage.sync.get(["accessToken"]);
+			const accessToken = result.accessToken;
 
-		fetch(`https://api.github.com/user/repos`, {
-			headers: {
-				Authorization: `token ${accessToken}`,
-			},
-		})
-			.then((response) => response.json())
-			.then((repositories) => {
-				return repositories;
-			})
-			.catch((error) => {
-				console.error("Error fetching repositories:", error);
+			const response = await fetch(`https://api.github.com/user/repos`, {
+				headers: {
+					Authorization: `token ${accessToken}`,
+				},
 			});
+
+			if (!response.ok) {
+				console.error(
+					`Failed to fetch repositories: ${response.status} ${response.statusText}`
+				);
+				return [];
+			}
+
+			const repositories = await response.json();
+			return repositories;
+		} catch (error) {
+			console.error("Error fetching repositories:", error);
+			return [];
+		}
 	}
 }
 

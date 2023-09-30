@@ -1,46 +1,46 @@
-<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="welcome.css" />
-		<title>CodilitySync - Welcome</title>
+		<link rel="stylesheet" href="setup.css" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+		/>
+		<title>CodilitySync Setup</title>
 	</head>
 	<body>
-		<header>
-			<div class="header-content">
-				<h1>CodilitySync</h1>
-				<p>Automatically sync your code from Codility to GitHub</p>
+		<div class="container">
+			<h1>Link a repository</h1>
+			<p>
+				Before we continue, where where would you like to push your submissions?
+			</p>
+			<form id="welcomeForm">
+				<select id="repositorySelect" name="repositorySelect" required>
+					<option value="" disabled selected>Select a repository</option>
+					<option value="new">Create a new repository</option>
+				</select>
+				<button type="submit">Link Repository</button>
+			</form>
+			<p class="caption">You can change this later</p>
+			<div id="captionContainer">
+				<p class="caption">
+					Having Issues?
+					<a
+						href="https://github.com/carminechoi/CodilitySync/issues"
+						target="_blank"
+						>Report Bug</a
+					>
+				</p>
+				<p class="caption">
+					Enjoying the tool? ⭐️
+					<a href="https://github.com/carminechoi/CodilitySync" target="_blank"
+						>Star us on GitHub</a
+					>!
+				</p>
 			</div>
-		</header>
-		<main>
-			<div class="container">
-				<h2>Select Repository Type</h2>
-				<form id="welcomeForm">
-					<label>
-						<input
-							type="radio"
-							name="repositoryType"
-							value="existing"
-							checked
-						/>
-						Link an existing repository
-					</label>
-					<label>
-						<input type="radio" name="repositoryType" value="new" /> Create a
-						new private repository
-					</label>
-					<label for="repositoryName">Repository Name:</label>
-					<input
-						type="text"
-						id="repositoryName"
-						name="repositoryName"
-						required
-					/>
-					<button type="submit">Get Started</button>
-				</form>
-			</div>
-		</main>
-		<script src="welcome.js"></script>
+		</div>
+
+		<script src="setup.js" type="module"></script>
 	</body>
 </html>
