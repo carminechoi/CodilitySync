@@ -36,9 +36,12 @@ select {
 	border-radius: 5px;
 }
 
-option {
-	padding: 30px 0;
-	height: 50px;
+input {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
 }
 
 button {
@@ -50,6 +53,10 @@ button {
 	font-size: 16px;
 	cursor: pointer;
 	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #555;
 }
 
 #captionContainer {
