@@ -32,7 +32,7 @@ export class OAuth {
 		chrome.tabs.remove(tab.id);
 
 		// Open Welcome page
-		chrome.tabs.create({ url: "welcome/welcome.html", active: true });
+		chrome.tabs.create({ url: "setup/setup.html", active: true });
 
 		// Fetch access token
 		if (code) {
