@@ -57,12 +57,19 @@ select {
 	background-size: 0.65rem auto;
 }
 
-input {
+input[type="text"] {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+}
+
+.radio-label {
+	display: inline-block;
+	margin-right: 20px; /* Adjust the spacing between radio buttons */
+	margin-bottom: 20px;
+	font-size: 14px;
 }
 
 button {

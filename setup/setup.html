@@ -18,13 +18,22 @@
 					<option value="" disabled selected>Select a repository</option>
 					<option value="new">Create a new repository</option>
 				</select>
-				<input
-					type="text"
-					id="repoInput"
-					name="repoInput"
-					placeholder="Enter repository name"
-					style="display: none"
-				/>
+				<div id="newRepositoryForm" style="display: none">
+					<input
+						type="text"
+						id="repoInput"
+						name="repoInput"
+						placeholder="Enter repository name"
+					/>
+					<label class="radio-label">
+						<input type="radio" name="repositoryType" value="public" checked />
+						Public
+					</label>
+					<label class="radio-label">
+						<input type="radio" name="repositoryType" value="private" />
+						Private
+					</label>
+				</div>
 				<button id="submitButton" type="submit">Link Repository</button>
 			</form>
 			<p class="caption">You can change this later</p>

@@ -60,7 +60,7 @@ export class Github {
 		}
 	}
 
-	async createRepository(name) {
+	async createRepository(name, isPrivate) {
 		try {
 			const accessTokenStorage = await chrome.storage.sync.get(["accessToken"]);
 			const accessToken = accessTokenStorage.accessToken;
@@ -85,7 +85,7 @@ export class Github {
 					body: JSON.stringify({
 						name: name,
 						description: description,
-						private: false,
+						private: isPrivate,
 					}),
 				}
 			);
