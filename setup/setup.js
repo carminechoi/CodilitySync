@@ -41,7 +41,7 @@ document.getElementById("setupForm").addEventListener("submit", function (e) {
 	const repoName = selectedOption === "new" ? repoInput.value : selectedOption;
 
 	if (selectedOption === "new") {
-		Github.createRepository();
+		Github.createRepository(repoName);
 	}
 
 	chrome.storage.sync.set({ repository: repoName });
