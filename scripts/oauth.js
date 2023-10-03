@@ -3,6 +3,7 @@ import {
 	GITHUB_CLIENT_SECRET,
 	GITHUB_REDIRECT_URI,
 } from "../config.production.js";
+import { Github } from "./github.js";
 
 export class OAuth {
 	constructor() {
@@ -33,7 +34,11 @@ export class OAuth {
 
 		// Fetch access token
 		if (code) {
-			this.exchangeCodeForToken(code);
+			const accessToken = this.exchangeCodeForToken(code);
+			chrome.storage.sync.set({ accessToken: accessToken });
+
+			const userDetails = Github.fetchUserDetails();
+			chrome.storage.sync.set({ username: userDetails.login });
 		} else {
 			console.error("No authorization code found in the redirect URL.");
 		}
@@ -66,8 +71,7 @@ export class OAuth {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				const accessToken = data.access_token;
-				chrome.storage.sync.set({ accessToken: accessToken });
+				return data.access_token;
 			})
 			.catch((error) => {
 				console.error(
