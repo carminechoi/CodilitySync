@@ -30,10 +30,6 @@ export class OAuth {
 			active: true,
 			lastFocusedWindow: true,
 		});
-		chrome.tabs.remove(tab.id);
-
-		// Open Welcome page
-		chrome.tabs.create({ url: "setup/setup.html", active: true });
 
 		// Fetch access token
 		if (code) {
@@ -41,6 +37,10 @@ export class OAuth {
 		} else {
 			console.error("No authorization code found in the redirect URL.");
 		}
+
+		// Open Welcome page
+		chrome.tabs.remove(tab.id);
+		chrome.tabs.create({ url: "setup/setup.html", active: true });
 	}
 
 	// Extract query parameters from a URL
