@@ -35,6 +35,8 @@ export class Github {
 			return [];
 		}
 	}
+
+	async createRepository() {}
 }
 
 export default new Github();

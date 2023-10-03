@@ -38,7 +38,7 @@ export class OAuth {
 			console.error("No authorization code found in the redirect URL.");
 		}
 
-		// Open Welcome page
+		// Open Setup page
 		chrome.tabs.remove(tab.id);
 		chrome.tabs.create({ url: "setup/setup.html", active: true });
 	}
