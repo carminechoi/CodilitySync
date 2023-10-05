@@ -1,13 +1,14 @@
 export class Github {
 	constructor() {}
 
+	async isLinked() {
+		const result = await chrome.storage.sync.get(["repository"]);
+		return !!result.repository;
+	}
+
 	async isAuthorized() {
 		const result = await chrome.storage.sync.get(["accessToken"]);
-		if (result && result.accessToken) {
-			return true;
-		} else {
-			return false;
-		}
+		return !!result.accessToken;
 	}
 
 	async fetchUserDetails() {
