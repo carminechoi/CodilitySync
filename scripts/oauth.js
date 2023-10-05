@@ -45,7 +45,7 @@ export class OAuth {
 
 		// Open Setup page
 		chrome.tabs.remove(tab.id);
-		chrome.tabs.create({ url: "setup/setup.html", active: true });
+		chrome.tabs.create({ url: "pages/setup/setup.html", active: true });
 	}
 
 	// Extract query parameters from a URL
