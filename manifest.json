@@ -4,11 +4,11 @@
 	"description": "Sync Codility submissions to your Github",
 	"version": "1.0",
 	"background": {
-		"service_worker": "service-worker.js",
+		"service_worker": "scripts/service-worker.js",
 		"type": "module"
 	},
 	"action": {
-		"default_popup": "popup/popup.html"
+		"default_popup": "pages/popup/popup.html"
 	},
 	"icons": {
 		"16": "images/logo_16.png",
