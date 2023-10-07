@@ -7,6 +7,12 @@
 		"service_worker": "scripts/service-worker.js",
 		"type": "module"
 	},
+	"content_scripts": [
+		{
+			"matches": ["*://app.codility.com/*"],
+			"js": ["scripts/codility.js"]
+		}
+	],
 	"action": {
 		"default_popup": "pages/popup/popup.html"
 	},
@@ -16,6 +22,10 @@
 		"48": "images/logo_48.png",
 		"128": "images/logo_128.png"
 	},
-	"permissions": ["identity", "tabs", "storage"],
-	"host_permissions": ["https://github.com/*", "https://api.github.com/*"]
+	"permissions": ["identity", "tabs", "storage", "webRequest"],
+	"host_permissions": [
+		"https://github.com/*",
+		"https://api.github.com/*",
+		"*://*.codility.com/*"
+	]
 }

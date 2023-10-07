@@ -34,12 +34,6 @@ p {
 	color: #ffffff;
 }
 
-a:visited {
-	color: lightblue;
-	background-color: transparent;
-	text-decoration: none;
-}
-
 hr {
 	margin: 0px 10px;
 }
@@ -69,6 +63,14 @@ button:active {
 
 a {
 	margin: 0px 4px;
+	color: lightblue;
+	text-decoration: none;
+}
+
+a:visited {
+	color: lightblue;
+	background-color: transparent;
+	text-decoration: none;
 }
 
 #iconsContainer {

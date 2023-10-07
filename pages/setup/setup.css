@@ -94,6 +94,8 @@ button:active {
 
 a {
 	margin: 0px 4px;
+	color: lightblue;
+	text-decoration: none;
 }
 
 a:visited {
