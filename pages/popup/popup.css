@@ -1,0 +1,78 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #1d1d1d;
+	width: 350px;
+	text-align: center;
+}
+
+header {
+	padding-top: 10;
+}
+
+.container {
+	margin: 20px 10px;
+}
+
+h1 {
+	font-size: 36px;
+	color: #ffffff;
+}
+
+p {
+	font-size: 16px;
+	color: #ffffff;
+}
+
+hr {
+	margin: 0px 10px;
+}
+
+button {
+	background-color: #bb86fc;
+	color: #1d1d1d;
+	border: none;
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+button i {
+	margin-right: 5px;
+}
+
+button:hover {
+	background-color: #8b4ed4;
+}
+
+button:active {
+	background-color: #555;
+}
+
+a {
+	margin: 0px 4px;
+	color: lightblue;
+	text-decoration: none;
+}
+
+a:visited {
+	color: lightblue;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+#iconsContainer {
+	padding: 10px;
+}
+
+#bottomContainer {
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+
+.caption {
+	text-align: center;
+	font-size: 12;
+	padding: 0;
+	margin: 0;
+}

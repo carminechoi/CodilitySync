@@ -3,7 +3,10 @@ import { GITHUB_REDIRECT_URI } from "../config.production.js";
 
 // Listen for messages from your popup or content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	console.log("receive");
+	if (message.codilityData) {
+		const codilityData = message.codilityData;
+		console.log(codilityData);
+	}
 });
 
 // Listen for changes in the active tab's URL

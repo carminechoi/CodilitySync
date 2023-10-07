@@ -3,11 +3,13 @@ import {
 	GITHUB_CLIENT_SECRET,
 	GITHUB_REDIRECT_URI,
 } from "../config.production.js";
+import Github from "./github.js";
 
 export class OAuth {
 	constructor() {
 		this.access_token_url = "https://github.com/login/oauth/access_token";
 		this.authoriation_url = "https://github.com/login/oauth/authorize";
+		this.username_url = "https://api.github.com/user";
 		this.client_id = GITHUB_CLIENT_ID ?? "";
 		this.client_secret = GITHUB_CLIENT_SECRET ?? "";
 		this.redirect_uri = GITHUB_REDIRECT_URI ?? "";
@@ -29,17 +31,21 @@ export class OAuth {
 			active: true,
 			lastFocusedWindow: true,
 		});
-		chrome.tabs.remove(tab.id);
-
-		// Open Welcome page
-		chrome.tabs.create({ url: "welcome/welcome.html", active: true });
 
 		// Fetch access token
 		if (code) {
-			this.exchangeCodeForToken(code);
+			const accessToken = this.exchangeCodeForToken(code);
+			chrome.storage.sync.set({ accessToken: accessToken });
+
+			const userDetails = Github.fetchUserDetails();
+			chrome.storage.sync.set({ username: userDetails.login });
 		} else {
 			console.error("No authorization code found in the redirect URL.");
 		}
+
+		// Open Setup page
+		chrome.tabs.remove(tab.id);
+		chrome.tabs.create({ url: "pages/setup/setup.html", active: true });
 	}
 
 	// Extract query parameters from a URL
@@ -65,8 +71,7 @@ export class OAuth {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				const accessToken = data.access_token;
-				chrome.storage.sync.set({ accessToken: accessToken });
+				return data.access_token;
 			})
 			.catch((error) => {
 				console.error(
