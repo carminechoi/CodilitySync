@@ -1,11 +1,17 @@
 import OAuth from "../scripts/oauth.js";
+import Github from "./github.js";
 import { GITHUB_REDIRECT_URI } from "../config.production.js";
+
+const github = new Github();
 
 // Listen for messages from your popup or content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.codilityData) {
 		const codilityData = message.codilityData;
 		console.log(codilityData);
+	}
+	if (message.action == "fetchUserDetails") {
+		github.fetchUserDetails();
 	}
 });
 
