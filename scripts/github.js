@@ -1,5 +1,42 @@
 export class Github {
-	constructor() {}
+	constructor() {
+		this.accessToken = this.getAccessToken();
+		this.repository = this.getRepository();
+		this.username = this.getUsername();
+		this.baseURL = "https://api.github.com";
+	}
+
+	// Getters
+	async getAccessToken() {
+		const result = await chrome.storage.sync.get(["accessToken"]);
+		return result.accessToken;
+	}
+
+	async getRepository() {
+		const result = await chrome.storage.sync.get(["repository"]);
+		return result.repository;
+	}
+
+	async getUsername() {
+		const result = await chrome.storage.sync.get(["username"]);
+		return result.username;
+	}
+
+	// Setters
+	async setAccessToken(accessToken) {
+		this.accessToken = accessToken;
+		chrome.storage.sync.set({ accessToken: accessToken });
+	}
+
+	async setRepository(repository) {
+		this.repository = repository;
+		chrome.storage.sync.set({ repository: repository });
+	}
+
+	async setUsername(username) {
+		this.username = username;
+		chrome.storage.sync.set({ username: username });
+	}
 
 	async isLinked() {
 		const result = await chrome.storage.sync.get(["repository"]);
@@ -11,14 +48,12 @@ export class Github {
 		return !!result.accessToken;
 	}
 
+	// Github Actions
 	async fetchUserDetails() {
 		try {
-			const result = await chrome.storage.sync.get(["accessToken"]);
-			const accessToken = result.accessToken;
-
-			const response = await fetch("https://api.github.com/user", {
+			const response = await fetch(`${this.baseURL}/user`, {
 				headers: {
-					Authorization: `token ${accessToken}`,
+					Authorization: `token ${this.accessToken}`,
 				},
 			});
 
@@ -37,12 +72,9 @@ export class Github {
 
 	async fetchUserRepositories() {
 		try {
-			const result = await chrome.storage.sync.get(["accessToken"]);
-			const accessToken = result.accessToken;
-
-			const response = await fetch(`https://api.github.com/user/repos`, {
+			const response = await fetch(`${this.baseURL}/user/repos`, {
 				headers: {
-					Authorization: `token ${accessToken}`,
+					Authorization: `token ${this.accessToken}`,
 				},
 			});
 
@@ -63,9 +95,6 @@ export class Github {
 
 	async createRepository(name, isPrivate) {
 		try {
-			const accessTokenStorage = await chrome.storage.sync.get(["accessToken"]);
-			const accessToken = accessTokenStorage.accessToken;
-
 			const usernameStorage = await chrome.storage.sync.get(["username"]);
 			const username = usernameStorage.username;
 
@@ -76,11 +105,11 @@ export class Github {
 
 			// Create new repository
 			const createRepoResponse = await fetch(
-				"https://api.github.com/user/repos",
+				`${this.baseURL}` / user / repos``,
 				{
 					method: "POST",
 					headers: {
-						Authorization: `token ${accessToken}`,
+						Authorization: `token ${this.accessToken}`,
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
@@ -98,11 +127,11 @@ export class Github {
 
 			// Create a README.md file
 			const createReadmeResponse = await fetch(
-				`https://api.github.com/repos/${username}/${name}/contents/README.md`,
+				`${this.baseURL}/repos/${username}/${name}/contents/README.md`,
 				{
 					method: "PUT",
 					headers: {
-						Authorization: `token ${accessToken}`,
+						Authorization: `token ${this.accessToken}`,
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
