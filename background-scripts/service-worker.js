@@ -1,5 +1,5 @@
-import OAuth from "../scripts/oauth.js";
-import { Github } from "./github.js";
+import OAuth from "../content-scripts/oauth.js";
+import { Github } from "../scripts/github.js";
 import { GITHUB_REDIRECT_URI } from "../config.production.js";
 
 const github = new Github();
