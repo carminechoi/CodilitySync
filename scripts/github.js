@@ -49,6 +49,7 @@ export class Github {
 	}
 
 	// Github Actions
+
 	async fetchUserDetails() {
 		try {
 			const response = await fetch(`${this.baseURL}/user`, {
@@ -63,6 +64,7 @@ export class Github {
 			}
 
 			const userData = await response.json();
+			this.setUsername(userData.username);
 			return userData;
 		} catch (error) {
 			console.error("Error fetching user details:", error);

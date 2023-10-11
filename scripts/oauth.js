@@ -8,7 +8,6 @@ export class OAuth {
 	constructor() {
 		this.access_token_url = "https://github.com/login/oauth/access_token";
 		this.authoriation_url = "https://github.com/login/oauth/authorize";
-		this.username_url = "https://api.github.com/user";
 		this.client_id = GITHUB_CLIENT_ID ?? "";
 		this.client_secret = GITHUB_CLIENT_SECRET ?? "";
 		this.redirect_uri = GITHUB_REDIRECT_URI ?? "";
@@ -33,12 +32,13 @@ export class OAuth {
 
 		// Fetch access token
 		if (code) {
-			const accessToken = this.exchangeCodeForToken(code);
-			chrome.storage.sync.set({ accessToken: accessToken });
+			const accessToken = await this.exchangeCodeForToken(code);
 
-			chrome.runtime.sendMessage({ action: "fetchUserDetails" }, (response) => {
-				chrome.storage.sync.set({ username: response.login });
+			chrome.runtime.sendMessage({
+				action: "setAccessToken",
+				accessToken: accessToken,
 			});
+			chrome.runtime.sendMessage({ action: "fetchUserDetails" });
 		} else {
 			console.error("No authorization code found in the redirect URL.");
 		}
@@ -55,30 +55,36 @@ export class OAuth {
 	}
 
 	// Exchange the authorization code for an access token
-	exchangeCodeForToken(code) {
-		fetch(this.access_token_url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json",
-			},
-			body: JSON.stringify({
-				code: code,
-				client_id: this.client_id,
-				client_secret: this.client_secret,
-				redirect_uri: this.redirect_uri,
-			}),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				return data.access_token;
-			})
-			.catch((error) => {
-				console.error(
-					"Error exchanging authorization code for access token:",
-					error
-				);
+	async exchangeCodeForToken(code) {
+		try {
+			const response = await fetch(this.access_token_url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify({
+					code: code,
+					client_id: this.client_id,
+					client_secret: this.client_secret,
+					redirect_uri: this.redirect_uri,
+				}),
 			});
+
+			if (response.status !== 200) {
+				const errorData = await response.json();
+				throw new Error(`Failed to get access token: ${errorData.message}`);
+			}
+
+			const data = await response.json();
+			return data.access_token;
+		} catch (error) {
+			console.error(
+				"Error exchanging authorization code for access token:",
+				error
+			);
+			throw error;
+		}
 	}
 }
 

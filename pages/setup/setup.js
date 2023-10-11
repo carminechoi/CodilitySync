@@ -1,21 +1,23 @@
-import Github from "../../scripts/github.js";
-
 const repoSelect = document.getElementById("repoSelect");
 const repoInput = document.getElementById("repoInput");
 const newRepositoryForm = document.getElementById("newRepositoryForm");
 const submitButton = document.getElementById("submitButton");
 
 // Load the users repositories into the options
-document.addEventListener("DOMContentLoaded", async function () {
-	const repositories = await Github.fetchUserRepositories();
-	if (Array.isArray(repositories)) {
-		repositories.forEach((repo) => {
-			const option = document.createElement("option");
-			option.value = repo.name;
-			option.textContent = repo.name;
-			repoSelect.appendChild(option);
-		});
-	}
+document.addEventListener("DOMContentLoaded", function () {
+	chrome.runtime.sendMessage(
+		{ action: "fetchUserRepositories" },
+		(response) => {
+			if (Array.isArray(response)) {
+				response.forEach((repo) => {
+					const option = document.createElement("option");
+					option.value = repo.name;
+					option.textContent = repo.name;
+					repoSelect.appendChild(option);
+				});
+			}
+		}
+	);
 });
 
 // Listen for repository selections
@@ -42,13 +44,14 @@ document.getElementById("setupForm").addEventListener("submit", function (e) {
 	const privacy = document.querySelector(
 		'input[name="repositoryType"]:checked'
 	).value;
+	const name = selectedOption === "new" ? repoInput.value : selectedOption;
 
-	const repoName = selectedOption === "new" ? repoInput.value : selectedOption;
-
-	if (selectedOption === "new") {
-		Github.createRepository(repoName, privacy == "private");
-	}
-	chrome.storage.sync.set({ repository: repoName });
+	chrome.runtime.sendMessage({
+		action: "selectRepository",
+		name: name,
+		type: selectedOption,
+		isPrivacy: privacy == "private",
+	});
 
 	chrome.action.setPopup({
 		popup: "pages/complete/complete.html",
