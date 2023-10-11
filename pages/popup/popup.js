@@ -1,4 +1,4 @@
-import OAuth from "../../scripts/oauth.js";
+import OAuth from "../../content-scripts/oauth.js";
 import Github from "../../scripts/github.js";
 
 document.addEventListener("DOMContentLoaded", async function () {

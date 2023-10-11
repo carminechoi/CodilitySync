@@ -10,7 +10,11 @@
 	"content_scripts": [
 		{
 			"matches": ["*://app.codility.com/*"],
-			"js": ["scripts/codility.js"]
+			"js": ["content-scripts/codility.js"]
+		},
+		{
+			"matches": ["https://github.com/?referrer=codilitysync"],
+			"js": ["content-scripts/oauth.js"]
 		}
 	],
 	"action": {
@@ -23,9 +27,5 @@
 		"128": "images/logo_128.png"
 	},
 	"permissions": ["identity", "tabs", "storage", "webRequest"],
-	"host_permissions": [
-		"https://github.com/*",
-		"https://api.github.com/*",
-		"*://*.codility.com/*"
-	]
+	"host_permissions": ["*://*.github.com/*", "*://*.codility.com/*"]
 }
