@@ -6,6 +6,7 @@ export const GITHUB_REDIRECT_URI = CONFIG.GITHUB_REDIRECT_URI;
 
 export const GITHUB_API_URL = "https://api.github.com";
 export const GITHUB_AUTH_URL = "https://github.com/login/oauth/authorize";
+export const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
 export const GITHUB_AUTH_SCOPE = "repo";
 
 export const README_TEMPLATE = (title, difficulty, description) => `

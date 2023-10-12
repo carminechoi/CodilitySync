@@ -95,15 +95,13 @@ function handleCodility(data) {
 	);
 	const readmeCommit = `Add README.md for ${codilityData.title}`;
 
-	github
-		.upsertFileOrDirectory(readmePath, readmeContent, readmeCommit)
-		.then(() => {
-			// Create code file
-			const codePath = `${codilityData.title}/${codilityData.title}.${
-				Constants.FILE_EXTENSIONS[codilityData.language]
-			}`;
-			const codeContent = codilityData.code;
-			const codeCommit = `Task Score: ${codilityData.taskScore} | Correctness Score: ${codilityData.correctnessScore}`;
-			github.upsertFileOrDirectory(codePath, codeContent, codeCommit);
-		});
+	github.upsertFile(readmePath, readmeContent, readmeCommit).then(() => {
+		// Create code file
+		const codePath = `${codilityData.title}/${codilityData.title}.${
+			Constants.FILE_EXTENSIONS[codilityData.language]
+		}`;
+		const codeContent = codilityData.code;
+		const codeCommit = `Task Score: ${codilityData.taskScore} | Correctness Score: ${codilityData.correctnessScore}`;
+		github.upsertFile(codePath, codeContent, codeCommit);
+	});
 }

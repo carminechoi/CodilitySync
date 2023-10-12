@@ -1,3 +1,5 @@
+import { GITHUB_API_URL, GITHUB_TOKEN_URL } from "../constants.js";
+
 export class Github {
 	constructor() {
 		chrome.storage.sync.get(
@@ -8,7 +10,6 @@ export class Github {
 				this.username = result.username;
 			}
 		);
-		this.baseURL = "https://api.github.com";
 	}
 
 	// Setters
@@ -38,10 +39,11 @@ export class Github {
 	}
 
 	// Github Actions
+
+	// Exchange authorization code for an access token
 	async exchangeCodeForToken(code, clientId, clientSecret) {
 		try {
-			const access_token_url = "https://github.com/login/oauth/access_token";
-			const response = await fetch(access_token_url, {
+			const response = await fetch(GITHUB_TOKEN_URL, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -56,7 +58,11 @@ export class Github {
 
 			if (response.status !== 200) {
 				const errorData = await response.json();
-				console.error(`Failed to get access token: ${errorData.message}`);
+				console.error(
+					"Failed to get access token:",
+					response.status,
+					errorData.message
+				);
 			}
 
 			const data = await response.json();
@@ -70,9 +76,10 @@ export class Github {
 		}
 	}
 
+	// Get user details to save username
 	async fetchUserDetails() {
 		try {
-			const response = await fetch(`${this.baseURL}/user`, {
+			const response = await fetch(`${GITHUB_API_URL}/user`, {
 				headers: {
 					Authorization: `token ${this.accessToken}`,
 				},
@@ -80,7 +87,11 @@ export class Github {
 
 			if (response.status !== 200) {
 				const errorData = await response.json();
-				console.error(`Failed to get user details: ${errorData.message}`);
+				console.error(
+					"Failed to get user details:",
+					response.status,
+					errorData.message
+				);
 			}
 
 			const userData = await response.json();
@@ -92,9 +103,10 @@ export class Github {
 		}
 	}
 
+	// Get all public/private repositories of the user
 	async fetchUserRepositories() {
 		try {
-			const response = await fetch(`${this.baseURL}/user/repos`, {
+			const response = await fetch(`${GITHUB_API_URL}/user/repos`, {
 				headers: {
 					Authorization: `token ${this.accessToken}`,
 				},
@@ -102,7 +114,11 @@ export class Github {
 
 			if (response.status !== 200) {
 				const errorData = await response.json();
-				console.error(`Failed to fetch repositories: ${errorData.message}`);
+				console.error(
+					"Failed to fetch repositories:",
+					response.status,
+					errorData.message
+				);
 				return [];
 			}
 
@@ -122,7 +138,7 @@ export class Github {
 				"Collection of Codility questions - Created using [CodilitySync](https://github.com/carminechoi/CodilitySync)";
 
 			// Create new repository
-			const response = await fetch(`${this.baseURL}/user/repos`, {
+			const response = await fetch(`${GITHUB_API_URL}/user/repos`, {
 				method: "POST",
 				headers: {
 					Authorization: `token ${this.accessToken}`,
@@ -135,23 +151,30 @@ export class Github {
 				}),
 			});
 
-			if (response.status !== 201) {
+			if (response.status !== 200 && response.status !== 201) {
 				const errorData = await response.json();
-				console.error(`Failed to create repository: ${errorData.message}`);
+				console.error(
+					"Failed to create repository:",
+					response.status,
+					errorData.message
+				);
 			}
 
 			// Create a README.md file
-			this.upsertFileOrDirectory("README.md", readmeContent, "Initial commit");
+			this.upsertFile("README.md", readmeContent, "Initial commit");
 		} catch (error) {
 			console.error("Error creating repository:", error);
 			throw error;
 		}
 	}
 
-	async upsertFileOrDirectory(path, content, commitMessage) {
+	// Update/Insert a file to repository
+	async upsertFile(path, content, commitMessage) {
 		try {
+			const sha = await this.fileExists(path);
+
 			const response = await fetch(
-				`${this.baseURL}/repos/${this.username}/${this.repository}/contents/${path}`,
+				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
 				{
 					method: "PUT",
 					headers: {
@@ -161,16 +184,52 @@ export class Github {
 					body: JSON.stringify({
 						message: commitMessage,
 						content: btoa(content),
+						sha,
 					}),
 				}
 			);
 
-			if (response.status !== 201) {
+			if (response.status !== 200 && response.status !== 201) {
 				const errorData = await response.json();
-				console.error("Error upserting file/directory:", errorData.message);
+				console.error(
+					"Error upserting file/directory:",
+					response.status,
+					errorData.message
+				);
 			}
 		} catch (error) {
 			console.error("Error upserting file/directory:", error);
+		}
+	}
+
+	// Get SHA of file if it exists
+	async fileExists(path) {
+		try {
+			const response = await fetch(
+				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
+				{
+					method: "GET",
+					headers: {
+						Authorization: `token ${this.accessToken}`,
+						"Content-Type": "application/json",
+					},
+				}
+			);
+
+			if (response.status !== 200) {
+				const errorData = await response.json();
+				console.error(
+					"Error checking file:",
+					response.status,
+					errorData.message
+				);
+				return null;
+			}
+			const data = await response.json();
+			return data.sha;
+		} catch (error) {
+			console.error("Error checking file:", error);
+			return null;
 		}
 	}
 }
