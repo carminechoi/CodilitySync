@@ -49,6 +49,39 @@ export class Github {
 	}
 
 	// Github Actions
+	// Exchange the authorization code for an access token
+	async exchangeCodeForToken(code, clientId, clientSecret) {
+		try {
+			const access_token_url = "https://github.com/login/oauth/access_token";
+			const response = await fetch(access_token_url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify({
+					code: code,
+					client_id: clientId,
+					client_secret: clientSecret,
+					// redirect_uri: redirectUri,
+				}),
+			});
+
+			if (response.status !== 200) {
+				const errorData = await response.json();
+				throw new Error(`Failed to get access token: ${errorData.message}`);
+			}
+
+			const data = await response.json();
+			this.setAccessToken(data.access_token);
+		} catch (error) {
+			console.error(
+				"Error exchanging authorization code for access token:",
+				error
+			);
+			throw error;
+		}
+	}
 
 	async fetchUserDetails() {
 		try {
