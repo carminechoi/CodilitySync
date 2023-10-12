@@ -4,7 +4,7 @@
 	"description": "Sync Codility submissions to your Github",
 	"version": "1.0",
 	"background": {
-		"service_worker": "scripts/service-worker.js",
+		"service_worker": "background-scripts/service-worker.js",
 		"type": "module"
 	},
 	"content_scripts": [
@@ -13,7 +13,7 @@
 			"js": ["content-scripts/codility.js"]
 		},
 		{
-			"matches": ["https://github.com/?referrer=codilitysync"],
+			"matches": ["https://github.com/?referrer=codilitysync&*"],
 			"js": ["content-scripts/oauth.js"]
 		}
 	],

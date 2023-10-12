@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	);
 });
 
-// Listen for repository selections
+// Listen for repository selection changes
 document.getElementById("repoSelect").addEventListener("change", function (e) {
 	const selectedOption = repoSelect.value;
 
@@ -35,7 +35,7 @@ document.getElementById("repoSelect").addEventListener("change", function (e) {
 	}
 });
 
-// Listen for for submission
+// Listen for form submission
 document.getElementById("setupForm").addEventListener("submit", function (e) {
 	e.preventDefault();
 
@@ -47,14 +47,11 @@ document.getElementById("setupForm").addEventListener("submit", function (e) {
 	const name = selectedOption === "new" ? repoInput.value : selectedOption;
 
 	chrome.runtime.sendMessage({
-		action: "selectRepository",
+		action: "submitSetupForm",
 		name: name,
 		type: selectedOption,
 		isPrivacy: privacy == "private",
 	});
 
-	chrome.action.setPopup({
-		popup: "pages/complete/complete.html",
-	});
 	window.location.href = "../complete/complete.html";
 });

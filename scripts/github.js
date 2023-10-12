@@ -1,25 +1,15 @@
 export class Github {
 	constructor() {
-		this.accessToken = this.getAccessToken();
-		this.repository = this.getRepository();
-		this.username = this.getUsername();
+		chrome.storage.sync.get(["accessToken"]).then((result) => {
+			this.accessToken = result.accessToken;
+		});
+		chrome.storage.sync.get(["repository"]).then((result) => {
+			this.repository = result.repository;
+		});
+		chrome.storage.sync.get(["username"]).then((result) => {
+			this.username = result.username;
+		});
 		this.baseURL = "https://api.github.com";
-	}
-
-	// Getters
-	async getAccessToken() {
-		const result = await chrome.storage.sync.get(["accessToken"]);
-		return result.accessToken;
-	}
-
-	async getRepository() {
-		const result = await chrome.storage.sync.get(["repository"]);
-		return result.repository;
-	}
-
-	async getUsername() {
-		const result = await chrome.storage.sync.get(["username"]);
-		return result.username;
 	}
 
 	// Setters
@@ -49,6 +39,38 @@ export class Github {
 	}
 
 	// Github Actions
+	// Exchange the authorization code for an access token
+	async exchangeCodeForToken(code, clientId, clientSecret) {
+		try {
+			const access_token_url = "https://github.com/login/oauth/access_token";
+			const response = await fetch(access_token_url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify({
+					code: code,
+					client_id: clientId,
+					client_secret: clientSecret,
+				}),
+			});
+
+			if (response.status !== 200) {
+				const errorData = await response.json();
+				throw new Error(`Failed to get access token: ${errorData.message}`);
+			}
+
+			const data = await response.json();
+			this.setAccessToken(data.access_token);
+		} catch (error) {
+			console.error(
+				"Error exchanging authorization code for access token:",
+				error
+			);
+			throw error;
+		}
+	}
 
 	async fetchUserDetails() {
 		try {
@@ -80,7 +102,7 @@ export class Github {
 				},
 			});
 
-			if (!response.ok) {
+			if (response.status !== 200) {
 				console.error(
 					`Failed to fetch repositories: ${response.status} ${response.statusText}`
 				);
@@ -106,21 +128,18 @@ export class Github {
 				"Collection of Codility questions - Created using [CodilitySync](https://github.com/carminechoi/CodilitySync)";
 
 			// Create new repository
-			const createRepoResponse = await fetch(
-				`${this.baseURL}` / user / repos``,
-				{
-					method: "POST",
-					headers: {
-						Authorization: `token ${this.accessToken}`,
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						name: name,
-						description: description,
-						private: isPrivate,
-					}),
-				}
-			);
+			const createRepoResponse = await fetch(`${this.baseURL}/user/repos`, {
+				method: "POST",
+				headers: {
+					Authorization: `token ${this.accessToken}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: name,
+					description: description,
+					private: isPrivate,
+				}),
+			});
 
 			if (createRepoResponse.status !== 201) {
 				const errorData = await createRepoResponse.json();
