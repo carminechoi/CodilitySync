@@ -78,10 +78,13 @@ function main() {
 		code: getCode(),
 	};
 
-	chrome.runtime.sendMessage({
-		action: "handleCodility",
-		data: codilityData,
-	});
+	// Only start codility flow when the scores are processed
+	if (codilityData.taskScore !== "" && codilityData.correctnessScore !== "") {
+		chrome.runtime.sendMessage({
+			action: "handleCodility",
+			data: codilityData,
+		});
+	}
 }
 
 main();
