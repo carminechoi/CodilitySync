@@ -60,8 +60,58 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			}
 			break;
 		case "handleCodility":
-			console.log(message.data);
-			github.createOrUpdateSubdirectory(message.data);
+			const codilityData = message.data;
+
+			// Create README.md
+			const difficultyColors = {
+				Easy: "green",
+				Medium: "yellow",
+				Hard: "red",
+			};
+			const readmePath = `${codilityData.title}/README.md`;
+			const readmeContent = `<h2>${
+				codilityData.title
+			}</h2><img src='https://img.shields.io/badge/Difficulty-${
+				codilityData.difficulty
+			}-${
+				difficultyColors[codilityData.difficulty] || "green"
+			}' alt='Difficulty: Easy' /><hr>${codilityData.description}`;
+			const readmeCommit = `Add README.md for ${codilityData.title}`;
+
+			github
+				.upsertFileOrDirectory(readmePath, readmeContent, readmeCommit)
+				.then(() => {
+					// Create code file
+					const extensions = {
+						C: "c",
+						"C++20": "cpp",
+						"C#": "cs",
+						Dart: "dart",
+						Go: "go",
+						"Java 11": "java",
+						"Java 8": "java",
+						JavaScript: "js",
+						Kotlin: "kt",
+						Lua: "lua",
+						"Objective-C": "m",
+						Pascal: "pas",
+						Perl: "pl",
+						PHP: "php",
+						Python: "py",
+						Ruby: "rb",
+						Scala: "scala",
+						Swift: "swift",
+						TypeScript: "ts",
+						"Visual Basic": "vb",
+					};
+					const codePath = `${codilityData.title}/${codilityData.title}.${
+						extensions[codilityData.language]
+					}`;
+					const codeContent = codilityData.code;
+					const codeCommit = `Task Score: ${codilityData.taskScore} | Correctness Score: ${codilityData.correctnessScore}`;
+					github.upsertFileOrDirectory(codePath, codeContent, codeCommit);
+				});
+
 		default:
 	}
 

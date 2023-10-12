@@ -20,7 +20,7 @@ function getDescription() {
 function getDifficulty() {
 	const difficultyElement = document.querySelector(".difficulty");
 	const difficultyText = difficultyElement?.textContent.trim() ?? "";
-	return difficultyText;
+	return difficultyText.charAt(0).toUpperCase() + difficultyText.slice(1);
 }
 
 function getLanguage() {
