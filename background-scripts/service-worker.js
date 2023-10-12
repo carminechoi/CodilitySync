@@ -42,10 +42,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			});
 			break;
 		case "submitSetupForm":
-			if (message.type === "new") {
-				github.createRepository(message.name, message.isPrivate);
-			}
-			github.setRepository(message.name);
+			github.setRepository(message.name).then(() => {
+				if (message.type === "new") {
+					github.createRepository(message.isPrivate);
+				}
+			});
 
 			chrome.action.setPopup({
 				popup: "pages/complete/complete.html",
