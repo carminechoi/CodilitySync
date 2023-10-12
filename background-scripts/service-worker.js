@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			redirectToSetupPage();
 			break;
 		case "fetchUserRepositories":
-			fetchUserRepositories();
+			fetchUserRepositories(sendResponse);
 			break;
 		case "submitSetupForm":
 			submitSetupForm(message.name, message.type, message.isPrivate);
@@ -58,7 +58,7 @@ function redirectToSetupPage() {
 	}
 }
 
-function fetchUserRepositories() {
+function fetchUserRepositories(sendResponse) {
 	github.fetchUserRepositories().then((repositories) => {
 		sendResponse(repositories);
 	});
