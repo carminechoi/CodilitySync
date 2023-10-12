@@ -1,4 +1,3 @@
-// import OAuth from "../content-scripts/oauth.js";
 import { Github } from "../scripts/github.js";
 import {
 	GITHUB_CLIENT_ID,
