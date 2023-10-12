@@ -1,13 +1,3 @@
-const codilityData = {
-	title: getTitle(),
-	description: getDescription(),
-	difficulty: getDifficulty(),
-	language: getLanguage(),
-	taskScore: getTaskScore(),
-	correctnessScore: getCorrectnessScore(),
-	code: getCode(),
-};
-
 function getTitle() {
 	const titleElement = document.querySelector("#task-0-name");
 	const titleText = titleElement?.textContent.trim() ?? "";
@@ -79,4 +69,18 @@ function findLastMatchingElement(pattern) {
 	return null;
 }
 
-chrome.runtime.sendMessage({ codilityData: codilityData });
+function main() {
+	const codilityData = {
+		title: getTitle(),
+		description: getDescription(),
+		difficulty: getDifficulty(),
+		language: getLanguage(),
+		taskScore: getTaskScore(),
+		correctnessScore: getCorrectnessScore(),
+		code: getCode(),
+	};
+
+	chrome.runtime.sendMessage({ codilityData: codilityData });
+}
+
+main();
