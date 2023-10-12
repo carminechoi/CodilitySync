@@ -34,6 +34,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		case "redirectToSetupPage":
 			if (oauthTab) {
 				chrome.tabs.update(oauthTab.id, { url: "pages/setup/setup.html" });
+				chrome.action.setPopup({ popup: "pages/setup/setup.html" });
 			}
 			break;
 		case "fetchUserRepositories":
