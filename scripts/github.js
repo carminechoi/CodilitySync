@@ -1,14 +1,13 @@
 export class Github {
 	constructor() {
-		chrome.storage.sync.get(["accessToken"]).then((result) => {
-			this.accessToken = result.accessToken;
-		});
-		chrome.storage.sync.get(["repository"]).then((result) => {
-			this.repository = result.repository;
-		});
-		chrome.storage.sync.get(["username"]).then((result) => {
-			this.username = result.username;
-		});
+		chrome.storage.sync.get(
+			["accessToken", "repository", "username"],
+			(result) => {
+				this.accessToken = result.accessToken;
+				this.repository = result.repository;
+				this.username = result.username;
+			}
+		);
 		this.baseURL = "https://api.github.com";
 	}
 
