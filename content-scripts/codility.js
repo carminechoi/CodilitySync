@@ -55,17 +55,15 @@ function getCode() {
 	}
 	return codeText;
 }
+
 // Get the last element whose IDs match the pattern
 function findLastMatchingElement(pattern) {
 	const matchingElements = document.querySelectorAll(`[id^="${pattern}"]`);
 
-	// Check if there are any matching elements
 	if (matchingElements.length > 0) {
-		// Return the last matching element
 		return matchingElements[matchingElements.length - 1];
 	}
 
-	// If no matching elements were found, return null
 	return null;
 }
 
@@ -80,7 +78,10 @@ function main() {
 		code: getCode(),
 	};
 
-	chrome.runtime.sendMessage({ codilityData: codilityData });
+	chrome.runtime.sendMessage({
+		action: "handleCodility",
+		data: codilityData,
+	});
 }
 
 main();

@@ -58,8 +58,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 				});
 			}
 			break;
+		case "handleCodility":
+			console.log(message.data);
+			github.createOrUpdateSubdirectory(message.data);
 		default:
-			console.log("default");
 	}
 
 	return true;

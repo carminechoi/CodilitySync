@@ -171,6 +171,8 @@ export class Github {
 			throw error;
 		}
 	}
+
+	async createOrUpdateSubdirectory(data) {}
 }
 
 export default new Github();
