@@ -42,13 +42,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 				sendResponse(repositories);
 			});
 			break;
-		case "selectRepository":
+		case "submitSetupForm":
 			if (message.type === "new") {
 				github.createRepository(message.name, message.isPrivate);
 			}
 			github.setRepository(message.name);
+
+			chrome.action.setPopup({
+				popup: "pages/complete/complete.html",
+			});
+
+			if (oauthTab) {
+				chrome.tabs.update(oauthTab.id, {
+					url: "pages/complete/complete.html",
+				});
+			}
 			break;
 		default:
 			console.log("default");
 	}
+
+	return true;
 });

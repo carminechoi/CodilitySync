@@ -1,25 +1,15 @@
 export class Github {
 	constructor() {
-		this.accessToken = this.getAccessToken();
-		this.repository = this.getRepository();
-		this.username = this.getUsername();
+		chrome.storage.sync.get(["accessToken"]).then((result) => {
+			this.accessToken = result.accessToken;
+		});
+		chrome.storage.sync.get(["repository"]).then((result) => {
+			this.repository = result.repository;
+		});
+		chrome.storage.sync.get(["username"]).then((result) => {
+			this.username = result.username;
+		});
 		this.baseURL = "https://api.github.com";
-	}
-
-	// Getters
-	async getAccessToken() {
-		const result = await chrome.storage.sync.get(["accessToken"]);
-		return result.accessToken;
-	}
-
-	async getRepository() {
-		const result = await chrome.storage.sync.get(["repository"]);
-		return result.repository;
-	}
-
-	async getUsername() {
-		const result = await chrome.storage.sync.get(["username"]);
-		return result.username;
 	}
 
 	// Setters
@@ -63,7 +53,6 @@ export class Github {
 					code: code,
 					client_id: clientId,
 					client_secret: clientSecret,
-					// redirect_uri: redirectUri,
 				}),
 			});
 
@@ -113,7 +102,7 @@ export class Github {
 				},
 			});
 
-			if (!response.ok) {
+			if (response.status !== 200) {
 				console.error(
 					`Failed to fetch repositories: ${response.status} ${response.statusText}`
 				);
@@ -139,21 +128,18 @@ export class Github {
 				"Collection of Codility questions - Created using [CodilitySync](https://github.com/carminechoi/CodilitySync)";
 
 			// Create new repository
-			const createRepoResponse = await fetch(
-				`${this.baseURL}` / user / repos``,
-				{
-					method: "POST",
-					headers: {
-						Authorization: `token ${this.accessToken}`,
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						name: name,
-						description: description,
-						private: isPrivate,
-					}),
-				}
-			);
+			const createRepoResponse = await fetch(`${this.baseURL}/user/repos`, {
+				method: "POST",
+				headers: {
+					Authorization: `token ${this.accessToken}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: name,
+					description: description,
+					private: isPrivate,
+				}),
+			});
 
 			if (createRepoResponse.status !== 201) {
 				const errorData = await createRepoResponse.json();

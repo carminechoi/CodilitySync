@@ -14,8 +14,7 @@
 		},
 		{
 			"matches": ["https://github.com/?referrer=codilitysync&*"],
-			"js": ["content-scripts/oauth.js"],
-			"type": "module"
+			"js": ["content-scripts/oauth.js"]
 		}
 	],
 	"action": {
