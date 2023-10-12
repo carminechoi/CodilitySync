@@ -53,8 +53,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			});
 
 			if (oauthTab) {
-				chrome.tabs.update(oauthTab.id, {
-					url: "pages/complete/complete.html",
+				chrome.tabs.get(oauthTab.id, () => {
+					chrome.tabs.remove(oauthTab.id);
+					oauthTab = null;
 				});
 			}
 			break;

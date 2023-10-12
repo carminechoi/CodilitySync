@@ -35,7 +35,7 @@ document.getElementById("repoSelect").addEventListener("change", function (e) {
 	}
 });
 
-// Listen for for submission
+// Listen for form submission
 document.getElementById("setupForm").addEventListener("submit", function (e) {
 	e.preventDefault();
 
@@ -52,4 +52,6 @@ document.getElementById("setupForm").addEventListener("submit", function (e) {
 		type: selectedOption,
 		isPrivacy: privacy == "private",
 	});
+
+	window.location.href = "../complete/complete.html";
 });
