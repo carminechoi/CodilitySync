@@ -6,9 +6,7 @@
 [![Rating](https://img.shields.io/chrome-web-store/rating/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
 [![GitHub issues](https://img.shields.io/github/issues/carminechoi/CodilitySync/issues)](https://github.com/carminechoi/CodilitySync/issues)
 
-# CodilitySync Chrome Extension
-
-![CodilitySync Logo](/images/logo_32.png)
+# CodilitySync Chrome Extension ![CodilitySync Logo](/images/logo_32.png)
 
 ## Overview
 
