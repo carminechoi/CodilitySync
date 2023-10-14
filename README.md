@@ -1,12 +1,10 @@
-# Your Chrome Extension Name
+# CodilitySync Chrome Extension ![CodilitySync Logo](/images/logo_32.png)
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/chrome-web-store/v/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
 [![Downloads](https://img.shields.io/chrome-web-store/d/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
 [![Rating](https://img.shields.io/chrome-web-store/rating/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
 [![GitHub issues](https://img.shields.io/github/issues/carminechoi/CodilitySync/issues)](https://github.com/carminechoi/CodilitySync/issues)
-
-# CodilitySync Chrome Extension ![CodilitySync Logo](/images/logo_32.png)
 
 ## Overview
 
