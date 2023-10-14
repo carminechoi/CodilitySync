@@ -162,6 +162,11 @@ export class Github {
 	async upsertFile(path, content, commitMessage) {
 		try {
 			const sha = await this.getFileSHAIfExists(path);
+
+			// encode then decode to ensures non-Latin1 characters are properly handled
+			const encodedContent = encodeURIComponent(content);
+			const decodedContent = decodeURIComponent(encodedContent);
+
 			const response = await fetch(
 				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
 				{
@@ -172,7 +177,7 @@ export class Github {
 					},
 					body: JSON.stringify({
 						message: commitMessage,
-						content: btoa(content),
+						content: btoa(decodedContent),
 						sha: sha,
 					}),
 				}
