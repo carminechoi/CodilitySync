@@ -1,18 +1,17 @@
 async function displayLinkedRepository() {
-	const repoResult = await chrome.storage.sync.get(["repository"]);
-	const usernameResult = await chrome.storage.sync.get(["username"]);
+	const { repository, username } = await chrome.storage.sync.get([
+		"repository",
+		"username",
+	]);
 
-	const repo = repoResult.repository;
-	const username = usernameResult.username;
+	const currentRepository = document.getElementById("currentRepo");
 
-	const currentRepo = document.getElementById("currentRepo");
-
-	if (repo && username) {
-		currentRepo.textContent = `${username}/${repo}`;
-		currentRepo.href = `https://github.com/${username}/${repo}`;
+	if (repository && username) {
+		currentRepository.textContent = `${username}/${repository}`;
+		currentRepository.href = `https://github.com/${username}/${repository}`;
 	} else {
-		currentRepo.textContent = "No Repository Linked";
-		currentRepo.href = "#";
+		currentRepository.textContent = "No Repository Linked";
+		currentRepository.href = "#";
 	}
 }
 

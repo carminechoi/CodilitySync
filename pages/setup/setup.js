@@ -2,6 +2,7 @@ const repoSelect = document.getElementById("repoSelect");
 const repoInput = document.getElementById("repoInput");
 const newRepositoryForm = document.getElementById("newRepositoryForm");
 const submitButton = document.getElementById("submitButton");
+const setupForm = document.getElementById("setupForm");
 
 // Load the users repositories into the options
 document.addEventListener("DOMContentLoaded", function () {
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Listen for repository selection changes
-document.getElementById("repoSelect").addEventListener("change", function (e) {
+repoSelect.addEventListener("change", function (e) {
 	const selectedOption = repoSelect.value;
 
 	if (selectedOption === "new") {
@@ -36,7 +37,7 @@ document.getElementById("repoSelect").addEventListener("change", function (e) {
 });
 
 // Listen for form submission
-document.getElementById("setupForm").addEventListener("submit", function (e) {
+setupForm.addEventListener("submit", function (e) {
 	e.preventDefault();
 
 	// Handle form submission based on the selected option

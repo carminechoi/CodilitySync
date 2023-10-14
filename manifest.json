@@ -9,7 +9,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://app.codility.com/*"],
+			"matches": ["*://app.codility.com/demo/*"],
 			"js": ["content-scripts/codility.js"]
 		},
 		{
