@@ -171,8 +171,7 @@ export class Github {
 	// Update/Insert a file to repository
 	async upsertFile(path, content, commitMessage) {
 		try {
-			const sha = await this.fileExists(path);
-
+			const sha = await this.getFileSHAIfExists(path);
 			const response = await fetch(
 				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
 				{
@@ -184,7 +183,7 @@ export class Github {
 					body: JSON.stringify({
 						message: commitMessage,
 						content: btoa(content),
-						sha,
+						sha: sha,
 					}),
 				}
 			);
@@ -203,7 +202,7 @@ export class Github {
 	}
 
 	// Get SHA of file if it exists
-	async fileExists(path) {
+	async getFileSHAIfExists(path) {
 		try {
 			const response = await fetch(
 				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
