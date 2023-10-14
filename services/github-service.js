@@ -5,9 +5,9 @@ export class Github {
 		chrome.storage.sync.get(
 			["accessToken", "repository", "username"],
 			(result) => {
-				this.accessToken = result.accessToken;
-				this.repository = result.repository;
-				this.username = result.username;
+				this.accessToken = result.accessToken ?? "";
+				this.repository = result.repository ?? "";
+				this.username = result.username ?? "";
 			}
 		);
 	}
@@ -15,27 +15,17 @@ export class Github {
 	// Setters
 	async setAccessToken(accessToken) {
 		this.accessToken = accessToken;
-		chrome.storage.sync.set({ accessToken: accessToken });
+		await chrome.storage.sync.set({ accessToken: accessToken });
 	}
 
 	async setRepository(repository) {
 		this.repository = repository;
-		chrome.storage.sync.set({ repository: repository });
+		await chrome.storage.sync.set({ repository: repository });
 	}
 
 	async setUsername(username) {
 		this.username = username;
-		chrome.storage.sync.set({ username: username });
-	}
-
-	async isLinked() {
-		const result = await chrome.storage.sync.get(["repository"]);
-		return !!result.repository;
-	}
-
-	async isAuthorized() {
-		const result = await chrome.storage.sync.get(["accessToken"]);
-		return !!result.accessToken;
+		await chrome.storage.sync.set({ username: username });
 	}
 
 	// Github Actions
@@ -96,7 +86,6 @@ export class Github {
 
 			const userData = await response.json();
 			this.setUsername(userData.login);
-			return userData;
 		} catch (error) {
 			console.error("Error fetching user details:", error);
 			throw error;
@@ -130,6 +119,7 @@ export class Github {
 		}
 	}
 
+	// Create new repository with README.md
 	async createRepository(isPrivate) {
 		try {
 			const description =
@@ -172,6 +162,11 @@ export class Github {
 	async upsertFile(path, content, commitMessage) {
 		try {
 			const sha = await this.getFileSHAIfExists(path);
+
+			// encode then decode to ensures non-Latin1 characters are properly handled
+			const encodedContent = encodeURIComponent(content);
+			const decodedContent = decodeURIComponent(encodedContent);
+
 			const response = await fetch(
 				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
 				{
@@ -182,7 +177,7 @@ export class Github {
 					},
 					body: JSON.stringify({
 						message: commitMessage,
-						content: btoa(content),
+						content: btoa(decodedContent),
 						sha: sha,
 					}),
 				}
@@ -216,12 +211,6 @@ export class Github {
 			);
 
 			if (response.status !== 200) {
-				const errorData = await response.json();
-				console.error(
-					"Error checking file:",
-					response.status,
-					errorData.message
-				);
 				return null;
 			}
 			const data = await response.json();

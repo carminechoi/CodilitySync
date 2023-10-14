@@ -1,5 +1,13 @@
-import { Github } from "../scripts/github.js";
-import * as Constants from "../constants.js";
+import { Github } from "../services/github-service.js";
+import {
+	GITHUB_AUTH_URL,
+	GITHUB_CLIENT_ID,
+	GITHUB_REDIRECT_URI,
+	GITHUB_AUTH_SCOPE,
+	GITHUB_CLIENT_SECRET,
+	README_TEMPLATE,
+	FILE_EXTENSIONS,
+} from "../constants.js";
 
 const github = new Github();
 let oauthTab = null;
@@ -33,7 +41,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // Actions
 function createOAuthTab() {
-	const url = `${Constants.GITHUB_AUTH_URL}?client_id=${Constants.GITHUB_CLIENT_ID}&redirect_uri=${Constants.GITHUB_REDIRECT_URI}&scope=${Constants.GITHUB_AUTH_SCOPE}`;
+	const url = `${GITHUB_AUTH_URL}?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_REDIRECT_URI}&scope=${GITHUB_AUTH_SCOPE}`;
 	chrome.tabs.create({ url: url, active: true }, (tab) => {
 		oauthTab = tab;
 	});
@@ -41,11 +49,7 @@ function createOAuthTab() {
 
 function handleOAuthFlow(authCode) {
 	github
-		.exchangeCodeForToken(
-			authCode,
-			Constants.GITHUB_CLIENT_ID,
-			Constants.GITHUB_CLIENT_SECRET
-		)
+		.exchangeCodeForToken(authCode, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET)
 		.then(() => {
 			github.fetchUserDetails();
 		});
@@ -88,7 +92,7 @@ function handleCodility(data) {
 
 	// Create README.md
 	const readmePath = `${codilityData.title}/README.md`;
-	const readmeContent = Constants.README_TEMPLATE(
+	const readmeContent = README_TEMPLATE(
 		codilityData.title,
 		codilityData.difficulty,
 		codilityData.description
@@ -98,7 +102,7 @@ function handleCodility(data) {
 	github.upsertFile(readmePath, readmeContent, readmeCommit).then(() => {
 		// Create code file
 		const codePath = `${codilityData.title}/${codilityData.title}.${
-			Constants.FILE_EXTENSIONS[codilityData.language]
+			FILE_EXTENSIONS[codilityData.language]
 		}`;
 		const codeContent = codilityData.code;
 		const codeCommit = `Task Score: ${codilityData.taskScore} | Correctness Score: ${codilityData.correctnessScore}`;
