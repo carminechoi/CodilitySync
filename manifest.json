@@ -26,6 +26,6 @@
 		"48": "images/logo_48.png",
 		"128": "images/logo_128.png"
 	},
-	"permissions": ["identity", "tabs", "storage", "webRequest"],
-	"host_permissions": ["*://*.github.com/*", "*://*.codility.com/*"]
+	"permissions": ["tabs", "storage"],
+	"host_permissions": ["*://*.github.com/*"]
 }
