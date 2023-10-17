@@ -1,9 +1,9 @@
 # Your Chrome Extension Name
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/chrome-web-store/v/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
-[![Downloads](https://img.shields.io/chrome-web-store/d/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
-[![Rating](https://img.shields.io/chrome-web-store/rating/YOUR-EXTENSION-ID)](https://chrome.google.com/webstore/detail/YOUR-EXTENSION-ID)
+[![Version](https://img.shields.io/chrome-web-store/v/fphhigcdafaenfgknafdhgkjdfafdooo)](https://chrome.google.com/webstore/detail/fphhigcdafaenfgknafdhgkjdfafdooo)
+[![Downloads](https://img.shields.io/chrome-web-store/d/fphhigcdafaenfgknafdhgkjdfafdooo)](https://chrome.google.com/webstore/detail/fphhigcdafaenfgknafdhgkjdfafdooo)
+[![Rating](https://img.shields.io/chrome-web-store/rating/fphhigcdafaenfgknafdhgkjdfafdooo)](https://chrome.google.com/webstore/detail/fphhigcdafaenfgknafdhgkjdfafdooo)
 [![GitHub issues](https://img.shields.io/github/issues/carminechoi/CodilitySync/issues)](https://github.com/carminechoi/CodilitySync/issues)
 
 # CodilitySync Chrome Extension
@@ -16,7 +16,7 @@ CodilitySync is a Chrome extension that enhances your Codility experience. Effor
 
 ## Installation
 
-1. Visit the [Chrome Web Store](https://chrome.google.com/webstore/) to install the CodilitySync extension.
+1. Visit the [Chrome Web Store](https://chrome.google.com/webstore/fphhigcdafaenfgknafdhgkjdfafdooo) to install the CodilitySync extension.
 
 2. Click "Get" and follow the installation instructions.
 
