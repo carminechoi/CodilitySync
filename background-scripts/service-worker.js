@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			createOAuthTab();
 			break;
 		case "handleOAuthFlow":
-			handleOAuthFlow(message.authCode);
+			handleOAuthFlow(message.authCode, sendResponse);
 			break;
 		case "redirectToSetupPage":
 			redirectToSetupPage();
@@ -47,11 +47,12 @@ function createOAuthTab() {
 	});
 }
 
-function handleOAuthFlow(authCode) {
+function handleOAuthFlow(authCode, sendResponse) {
 	github
 		.exchangeCodeForToken(authCode, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET)
 		.then(() => {
 			github.fetchUserDetails();
+			sendResponse(true);
 		});
 }
 
