@@ -1,4 +1,4 @@
-# CodilitySync Chrome Extension ![CodilitySync Logo](/images/logo_32.png)
+# CodilitySync Chrome Extension ![CodilitySync Logo](/images/logos/logo_32.png)
 
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/chrome-web-store/v/fphhigcdafaenfgknafdhgkjdfafdooo)](https://chrome.google.com/webstore/detail/fphhigcdafaenfgknafdhgkjdfafdooo)
@@ -22,24 +22,24 @@ CodilitySync is a Chrome extension that enhances your Codility experience. Effor
 
 1. **Link Your GitHub Account:**
 
-   - Click the CodilitySync icon in the Chrome toolbar.
-   - Authorize the extension to access your GitHub repositories.
+    - Click the CodilitySync icon in the Chrome toolbar.
+    - Authorize the extension to access your GitHub repositories.
 
 2. **Create or Select a Repository:**
 
-   - Choose an existing GitHub repository or create a new one.
-   - Click "Save" to link the task to the selected repository.
+    - Choose an existing GitHub repository or create a new one.
+    - Click "Save" to link the task to the selected repository.
 
 3. **Auto-Generate READMEs:**
 
-   - Easily generate README files with task descriptions, difficulty levels, and more.
+    - Easily generate README files with task descriptions, difficulty levels, and more.
 
 4. **Save Code Snippets:**
 
-   - Capture your code snippets directly from Codility tasks.
+    - Capture your code snippets directly from Codility tasks.
 
 5. **View on GitHub:**
-   - Access your Codility tasks and code on GitHub for easy sharing and collaboration.
+    - Access your Codility tasks and code on GitHub for easy sharing and collaboration.
 
 ## Support
 
