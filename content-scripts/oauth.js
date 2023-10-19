@@ -9,14 +9,17 @@ async function main() {
 	const authCode = getQueryParam(window.location.search, "code");
 
 	if (authCode) {
-		chrome.runtime.sendMessage({
-			action: "handleOAuthFlow",
-			authCode: authCode,
-		});
-
-		chrome.runtime.sendMessage({
-			action: "redirectToSetupPage",
-		});
+		chrome.runtime.sendMessage(
+			{
+				action: "handleOAuthFlow",
+				authCode: authCode,
+			},
+			(response) => {
+				chrome.runtime.sendMessage({
+					action: "redirectToSetupPage",
+				});
+			}
+		);
 	} else {
 		console.error("No authorization code found in the redirect URL.");
 	}
