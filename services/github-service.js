@@ -163,9 +163,11 @@ export class Github {
 		try {
 			const sha = await this.getFileSHAIfExists(path);
 
-			// encode then decode to ensures non-Latin1 characters are properly handled
-			const encodedContent = encodeURIComponent(content);
-			const decodedContent = decodeURIComponent(encodedContent);
+			// convert content to binary, convert to string, then encode to ensure non-Latin1 characters are properly handled
+			const binaryContent = new TextEncoder().encode(content);
+			const base64Content = btoa(
+				String.fromCharCode.apply(null, binaryContent)
+			);
 
 			const response = await fetch(
 				`${GITHUB_API_URL}/repos/${this.username}/${this.repository}/contents/${path}`,
@@ -177,7 +179,7 @@ export class Github {
 					},
 					body: JSON.stringify({
 						message: commitMessage,
-						content: btoa(decodedContent),
+						content: base64Content,
 						sha: sha,
 					}),
 				}
