@@ -12,7 +12,7 @@ CodilitySync is a Chrome extension that enhances your Codility experience. Effor
 
 ## Installation
 
-1. Visit the [Chrome Web Store](https://chrome.google.com/webstore/fphhigcdafaenfgknafdhgkjdfafdooo) to install the CodilitySync extension.
+1. Visit the [Chrome Web Store](https://chromewebstore.google.com/detail/codilitysync/fphhigcdafaenfgknafdhgkjdfafdooo) to install the CodilitySync extension.
 
 2. Click "Get" and follow the installation instructions.
 
